@@ -27,8 +27,16 @@ public class Model {
 		this.idMap=dao.loadAllAirports();
 		Graphs.addAllVertices(this.grafo,idMap.values());
 		
-		for(CoppiaAeroporti c : dao.getCoppiaAeroporti(this.idMap,distanzaMinima)) {
-			Graphs.addEdge(this.grafo,c.getA1(), c.getA2(), c.getDistanzaMedia());			
+		for(CoppiaAeroporti c : dao.getCoppiaAeroporti(idMap, distanzaMinima)) {
+			DefaultWeightedEdge e = this.grafo.getEdge(c.getA1(), c.getA2());
+			if(e == null) {
+				Graphs.addEdgeWithVertices(this.grafo, c.getA1(), c.getA2(), c.getDistanzaMedia());
+				}
+			else {
+				double mediaVecchia = this.grafo.getEdgeWeight(e);
+				double mediaNuova = (mediaVecchia+c.getDistanzaMedia())/2;
+				this.grafo.setEdgeWeight(e, mediaNuova);
+			}
 		}
 		
 		System.out.println(this.grafo.vertexSet().size()+" "+this.grafo.edgeSet().size());
@@ -41,11 +49,14 @@ public class Model {
 	public int nVertici() {
 		return this.grafo.vertexSet().size();
 	}
-	public void archiGrafo() {
-	for(Rotta e : this.grafo.edgeSet()) {
-		e.
-		
-	}
+	public String archiGrafo() {
+		String s = "";
+		for(DefaultWeightedEdge e : grafo.edgeSet()) {
+			String riga = "Partenza: "+grafo.getEdgeSource(e).getCity()+" Arrivo: "+grafo.getEdgeTarget(e).getCity()+" Distanza media: "+grafo.getEdgeWeight(e);
+			s+=riga+"\n";
+		}
+	
+		return s;
 	}
 	
 

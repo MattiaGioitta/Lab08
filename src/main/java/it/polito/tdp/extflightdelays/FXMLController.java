@@ -39,12 +39,14 @@ public class FXMLController {
     	try {
     		int distanza = Integer.parseInt(this.distanzaMinima.getText());
     		this.model.creaGrafo(distanza);
-    		this.txtResult.appendText(String.format("Numero dei vertici: %d", this.model.nVertici()));
-    		this.txtResult.appendText(String.format("Numero di archi: %d", this.model.nArchi()));
+    		this.txtResult.appendText(String.format("Numero dei vertici: %d\n", this.model.nVertici()));
+    		this.txtResult.appendText(String.format("Numero di archi: %d\n", this.model.nArchi()));
+    		this.txtResult.appendText(this.model.archiGrafo());
     		
     	}catch(NumberFormatException e) {
     		this.txtResult.appendText("Errore nell'inserimento della distanza!");
     	}
+    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

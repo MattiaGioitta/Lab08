@@ -100,7 +100,6 @@ public class ExtFlightDelaysDAO {
 	public List<CoppiaAeroporti> getCoppiaAeroporti(Map<Integer, Airport> idMap, int distanzaMinima) {
 		String sql = "SELECT ORIGIN_AIRPORT_ID AS oa, DESTINATION_AIRPORT_ID AS da, AVG(DISTANCE) AS distanza " + 
 				"FROM flights " + 
-				"WHERE ORIGIN_AIRPORT_ID>DESTINATION_AIRPORT_ID " + 
 				"GROUP BY ORIGIN_AIRPORT_ID, DESTINATION_AIRPORT_ID " + 
 				"HAVING AVG(DISTANCE)>?";
 		List<CoppiaAeroporti> lista = new ArrayList<>();
